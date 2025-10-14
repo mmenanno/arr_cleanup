@@ -1,0 +1,7 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+default:
+  radarr_url: http://localhost:7878
+  sonarr_url: http://localhost:8989
+  radarr_last_synced_at: <%= 1.day.ago %>
+  sonarr_last_synced_at: <%= 2.days.ago %>

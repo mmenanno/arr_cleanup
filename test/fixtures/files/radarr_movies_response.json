@@ -1,0 +1,51 @@
+[
+  {
+    "id": 1,
+    "title": "Another Round",
+    "year": 2020,
+    "tmdbId": 580175,
+    "hasFile": true,
+    "movieFile": {
+      "id": 1,
+      "relativePath": "Another Round (2020) {tmdb-580175}.mkv",
+      "path": "/data/media/movies/Another Round (2020) {tmdb-580175}.mkv",
+      "size": 20000000000,
+      "quality": {
+        "quality": {
+          "id": 10,
+          "name": "Remux-1080p",
+          "source": "bluray",
+          "resolution": 1080
+        }
+      },
+      "qualityProfile": {
+        "name": "HD-1080p"
+      }
+    }
+  },
+  {
+    "id": 2,
+    "title": "Test Movie",
+    "year": 2021,
+    "tmdbId": 123456,
+    "hasFile": true,
+    "movieFile": {
+      "id": 2,
+      "relativePath": "Test Movie (2021).mkv",
+      "path": "/data/media/movies/Test Movie (2021).mkv",
+      "size": 5000000000,
+      "quality": {
+        "quality": {
+          "id": 4,
+          "name": "Bluray-1080p",
+          "source": "bluray",
+          "resolution": 1080
+        }
+      },
+      "qualityProfile": {
+        "name": "HD-1080p"
+      }
+    }
+  }
+]
+

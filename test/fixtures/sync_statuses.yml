@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  service_type: MyString
+  status: MyString
+  progress_current: 1
+  progress_total: 1
+  message: MyString
+  started_at: 2025-10-13 22:04:35
+  completed_at: 2025-10-13 22:04:35
+
+two:
+  service_type: MyString
+  status: MyString
+  progress_current: 1
+  progress_total: 1
+  message: MyString
+  started_at: 2025-10-13 22:04:35
+  completed_at: 2025-10-13 22:04:35

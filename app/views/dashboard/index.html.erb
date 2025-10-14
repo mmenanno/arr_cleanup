@@ -1,0 +1,207 @@
+<div class="space-y-8">
+  <!-- Header -->
+  <div class="flex items-center gap-4">
+    <div class="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 shadow-lg">
+      <svg class="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+      </svg>
+    </div>
+    <div>
+      <h1 class="text-3xl font-bold text-white">Dashboard</h1>
+      <p class="text-sm text-gray-400">Overview of your Radarr and Sonarr library</p>
+    </div>
+  </div>
+
+  <!-- Sync Status -->
+  <%= turbo_stream_from "sync_status_radarr" %>
+  <%= turbo_stream_from "sync_status_sonarr" %>
+
+  <div>
+    <h2 class="text-xl font-bold text-white mb-4">Sync Status</h2>
+    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <%= render "dashboard/sync_status_card", service_type: "radarr", sync_status: @radarr_status %>
+      <%= render "dashboard/sync_status_card", service_type: "sonarr", sync_status: @sonarr_status %>
+    </div>
+  </div>
+
+  <!-- Statistics -->
+  <div>
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-xl font-bold text-white">Library Statistics</h2>
+      <%= form_with url: root_path, method: :get, data: { turbo_frame: "stats", controller: "auto-submit" } do |f| %>
+        <div data-controller="toggle" class="flex items-center gap-2">
+          <%= f.check_box(:include_ignored, { checked: @include_ignored, data: { action: "change->auto-submit#submit", toggle_target: "checkbox" }, class: "sr-only" }, "true", "false") %>
+          <button type="button" data-action="click->toggle#toggle" data-toggle-target="switch" class="<%= @include_ignored ? "bg-indigo-600" : "bg-gray-700" %> relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 focus:ring-offset-gray-900">
+            <span class="sr-only">Include ignored</span>
+            <span class="<%= @include_ignored ? "translate-x-5" : "translate-x-0" %> pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span>
+          </button>
+          <span class="text-xs font-medium text-gray-400 uppercase">Include Ignored</span>
+        </div>
+      <% end %>
+    </div>
+
+    <%= turbo_frame_tag "stats" do %>
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="relative overflow-hidden rounded-xl bg-gradient-to-br from-indigo-500/5 via-blue-500/5 to-cyan-500/5 border border-gray-700 shadow-lg">
+          <div class="p-6">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-indigo-600/20 border border-indigo-500/30">
+                <svg class="h-6 w-6 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h1.5C5.496 19.5 6 18.996 6 18.375m-3.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-1.5A1.125 1.125 0 0118 18.375M20.625 4.5H3.375m17.25 0c.621 0 1.125.504 1.125 1.125M20.625 4.5h-1.5C18.504 4.5 18 5.004 18 5.625m3.75 0v1.5c0 .621-.504 1.125-1.125 1.125M3.375 4.5c-.621 0-1.125.504-1.125 1.125M3.375 4.5h1.5C5.496 4.5 6 5.004 6 5.625m-3.75 0v1.5c0 .621.504 1.125 1.125 1.125m0 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m1.5-3.75C5.496 8.25 6 7.746 6 7.125v-1.5M4.875 8.25C5.496 8.25 6 8.754 6 9.375v1.5m0-5.25v5.25m0-5.25C6 5.004 6.504 4.5 7.125 4.5h9.75c.621 0 1.125.504 1.125 1.125m1.125 2.625h1.5m-1.5 0A1.125 1.125 0 0118 7.125v-1.5m1.125 2.625c-.621 0-1.125.504-1.125 1.125v1.5m2.625-2.625c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125M18 5.625v5.25M7.125 12h9.75m-9.75 0A1.125 1.125 0 016 10.875M7.125 12C6.504 12 6 12.504 6 13.125m0-2.25C6 11.496 5.496 12 4.875 12M18 10.875c0 .621-.504 1.125-1.125 1.125M18 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m-12 5.25v-5.25m0 5.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125m-12 0v-1.5c0-.621-.504-1.125-1.125-1.125M18 18.375v-5.25m0 5.25v-1.5c0-.621.504-1.125 1.125-1.125M18 13.125v1.5c0 .621.504 1.125 1.125 1.125M18 13.125c0-.621.504-1.125 1.125-1.125M6 13.125v1.5c0 .621-.504 1.125-1.125 1.125M6 13.125C6 12.504 5.496 12 4.875 12m-1.5 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M19.125 12h1.5m0 0c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h1.5m14.25 0h1.5" />
+                </svg>
+              </div>
+              <div class="text-xs font-medium text-gray-400 uppercase">Movies</div>
+            </div>
+            <div class="mt-4">
+              <div class="text-3xl font-bold text-white"><%= @total_movies %></div>
+              <% if @ignored_movies > 0 %>
+                <p class="text-xs text-gray-500 mt-1"><%= @ignored_movies %> ignored</p>
+              <% end %>
+            </div>
+            <div class="mt-4 pt-4 border-t border-gray-700">
+              <div class="flex items-center justify-between text-xs">
+                <span class="text-gray-400"><%= @remux_movies %> REMUX</span>
+                <span class="text-gray-400 font-medium"><%= format_bytes(@total_movie_size) %></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative overflow-hidden rounded-xl bg-gradient-to-br from-purple-500/5 via-indigo-500/5 to-blue-500/5 border border-gray-700 shadow-lg">
+          <div class="p-6">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-purple-600/20 border border-purple-500/30">
+                <svg class="h-6 w-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 20.25h12m-7.5-3v3m3-3v3m-10.125-3h17.25c.621 0 1.125-.504 1.125-1.125V4.875c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125z" />
+                </svg>
+              </div>
+              <div class="text-xs font-medium text-gray-400 uppercase">TV Shows</div>
+            </div>
+            <div class="mt-4">
+              <div class="text-3xl font-bold text-white"><%= @total_shows %></div>
+              <% if @ignored_shows > 0 %>
+                <p class="text-xs text-gray-500 mt-1"><%= @ignored_shows %> ignored</p>
+              <% end %>
+            </div>
+            <div class="mt-4 pt-4 border-t border-gray-700">
+              <div class="flex items-center justify-between text-xs">
+                <span class="text-gray-400"><%= @remux_shows %> with REMUX</span>
+                <span class="text-gray-400 font-medium"><%= format_bytes(@total_show_size) %></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative overflow-hidden rounded-xl bg-gradient-to-br from-yellow-500/5 via-amber-500/5 to-orange-500/5 border border-gray-700 shadow-lg">
+          <div class="p-6">
+            <div class="flex items-center gap-4 mb-4">
+              <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-yellow-600/20 border border-yellow-500/30">
+                <svg class="h-6 w-6 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375" />
+                </svg>
+              </div>
+              <div class="text-xs font-medium text-gray-400 uppercase">Total Storage</div>
+            </div>
+            <div class="mt-4">
+              <div class="text-3xl font-bold text-white"><%= format_bytes(@total_storage) %></div>
+            </div>
+            <div class="mt-4 pt-4 border-t border-gray-700">
+              <div class="grid grid-cols-2 gap-3 text-xs">
+                <div>
+                  <div class="text-gray-400 mb-1">Movies</div>
+                  <div class="text-white font-medium"><%= format_bytes(@total_movie_size) %></div>
+                </div>
+                <div>
+                  <div class="text-gray-400 mb-1">Shows</div>
+                  <div class="text-white font-medium"><%= format_bytes(@total_show_size) %></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Top Items -->
+  <div>
+    <h2 class="text-xl font-bold text-white mb-4">Top Items</h2>
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+      <!-- Largest Movies -->
+      <div class="relative overflow-hidden bg-gradient-to-br from-indigo-500/5 to-blue-500/5 border border-gray-700 shadow-lg rounded-xl">
+        <div class="px-6 py-6">
+          <div class="flex items-center gap-2 mb-4">
+            <svg class="h-5 w-5 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h1.5C5.496 19.5 6 18.996 6 18.375m-3.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-1.5A1.125 1.125 0 0118 18.375M20.625 4.5H3.375m17.25 0c.621 0 1.125.504 1.125 1.125M20.625 4.5h-1.5C18.504 4.5 18 5.004 18 5.625m3.75 0v1.5c0 .621-.504 1.125-1.125 1.125M3.375 4.5c-.621 0-1.125.504-1.125 1.125M3.375 4.5h1.5C5.496 4.5 6 5.004 6 5.625m-3.75 0v1.5c0 .621.504 1.125 1.125 1.125m0 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m1.5-3.75C5.496 8.25 6 7.746 6 7.125v-1.5M4.875 8.25C5.496 8.25 6 8.754 6 9.375v1.5m0-5.25v5.25m0-5.25C6 5.004 6.504 4.5 7.125 4.5h9.75c.621 0 1.125.504 1.125 1.125m1.125 2.625h1.5m-1.5 0A1.125 1.125 0 0118 7.125v-1.5m1.125 2.625c-.621 0-1.125.504-1.125 1.125v1.5m2.625-2.625c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125M18 5.625v5.25M7.125 12h9.75m-9.75 0A1.125 1.125 0 016 10.875M7.125 12C6.504 12 6 12.504 6 13.125m0-2.25C6 11.496 5.496 12 4.875 12M18 10.875c0 .621-.504 1.125-1.125 1.125M18 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m-12 5.25v-5.25m0 5.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125m-12 0v-1.5c0-.621-.504-1.125-1.125-1.125M18 18.375v-5.25m0 5.25v-1.5c0-.621.504-1.125 1.125-1.125M18 13.125v1.5c0 .621.504 1.125 1.125 1.125M18 13.125c0-.621.504-1.125 1.125-1.125M6 13.125v1.5c0 .621-.504 1.125-1.125 1.125M6 13.125C6 12.504 5.496 12 4.875 12m-1.5 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M19.125 12h1.5m0 0c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h1.5m14.25 0h1.5" />
+            </svg>
+            <h3 class="text-base font-semibold text-white">Largest Movies</h3>
+          </div>
+          <div class="space-y-2">
+            <% @largest_movies.each do |movie| %>
+              <%= link_to movie, class: "group block p-3 rounded-lg hover:bg-gray-700/50 transition-colors" do %>
+                <div class="flex justify-between items-center gap-4">
+                  <span class="text-sm text-white group-hover:text-indigo-300 truncate flex-1 transition-colors"><%= movie.title %></span>
+                  <div class="flex items-center gap-2 flex-shrink-0">
+                    <% if movie.is_remux %>
+                      <span class="inline-flex rounded-md bg-red-500/20 px-2 py-0.5 text-xs font-bold text-red-300 ring-1 ring-inset ring-red-500/30">REMUX</span>
+                    <% end %>
+                    <span class="text-sm font-medium text-purple-300"><%= format_bytes(movie.size_bytes) %></span>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+            <% if @largest_movies.empty? %>
+              <p class="text-gray-400 text-sm text-center py-4">No movies found</p>
+            <% end %>
+          </div>
+          <div class="mt-4 pt-4 border-t border-gray-700">
+            <%= link_to movies_path, class: "inline-flex items-center gap-1.5 text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors cursor-pointer" do %>
+              <span>View all movies</span>
+              <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <!-- Largest Shows -->
+      <div class="relative overflow-hidden bg-gradient-to-br from-purple-500/5 to-indigo-500/5 border border-gray-700 shadow-lg rounded-xl">
+        <div class="px-6 py-6">
+          <div class="flex items-center gap-2 mb-4">
+            <svg class="h-5 w-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 20.25h12m-7.5-3v3m3-3v3m-10.125-3h17.25c.621 0 1.125-.504 1.125-1.125V4.875c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125z" />
+            </svg>
+            <h3 class="text-base font-semibold text-white">Largest Shows</h3>
+          </div>
+          <div class="space-y-2">
+            <% @largest_shows.each do |show| %>
+              <%= link_to show, class: "group block p-3 rounded-lg hover:bg-gray-700/50 transition-colors" do %>
+                <div class="flex justify-between items-center gap-4">
+                  <span class="text-sm text-white group-hover:text-purple-300 truncate flex-1 transition-colors"><%= show.title %></span>
+                  <div class="flex items-center gap-2 flex-shrink-0">
+                    <% if show.contains_remux %>
+                      <span class="inline-flex rounded-md bg-red-500/20 px-2 py-0.5 text-xs font-bold text-red-300 ring-1 ring-inset ring-red-500/30">REMUX</span>
+                    <% end %>
+                    <span class="text-sm font-medium text-purple-300"><%= format_bytes(show.total_size_bytes) %></span>
+                  </div>
+                </div>
+              <% end %>
+            <% end %>
+            <% if @largest_shows.empty? %>
+              <p class="text-gray-400 text-sm text-center py-4">No shows found</p>
+            <% end %>
+          </div>
+          <div class="mt-4 pt-4 border-t border-gray-700">
+            <%= link_to shows_path, class: "inline-flex items-center gap-1.5 text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors cursor-pointer" do %>
+              <span>View all shows</span>
+              <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

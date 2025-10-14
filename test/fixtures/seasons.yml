@@ -1,0 +1,7 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+season_one:
+  show: test_show
+  season_number: 1
+  total_size_bytes: 5500000000
+  contains_remux: true

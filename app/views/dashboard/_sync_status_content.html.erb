@@ -1,0 +1,50 @@
+<%# locals: (service_type:, sync_status:) %>
+<div id="sync_status_content_<%= service_type %>">
+<% if sync_status.persisted? %>
+  <% case sync_status.status %>
+  <% when "queued" %>
+    <div class="flex items-center mb-1">
+      <svg class="animate-spin h-4 w-4 mr-2 text-yellow-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      <span class="text-sm font-semibold text-yellow-400">Queued</span>
+    </div>
+    <p class="text-xs text-gray-400"><%= sync_status.message %></p>
+  <% when "running" %>
+    <div class="flex items-center mb-1">
+      <svg class="animate-spin h-4 w-4 mr-2 text-indigo-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      <span class="text-sm font-semibold text-indigo-400">Syncing</span>
+    </div>
+    <p id="sync_message_<%= service_type %>" class="text-xs text-gray-400"><%= sync_status.message %></p>
+    <% if sync_status.progress_total > 0 %>
+      <div class="w-full bg-gray-700 rounded-full h-1.5 mt-2">
+        <div id="sync_progress_bar_<%= service_type %>" class="bg-indigo-600 h-1.5 rounded-full transition-all duration-300" style="width: <%= sync_status.progress_percentage %>%"></div>
+      </div>
+    <% end %>
+  <% when "error" %>
+    <div class="flex items-center mb-1">
+      <span class="text-sm font-semibold text-red-400">Error</span>
+    </div>
+    <p class="text-xs text-red-400"><%= sync_status.message %></p>
+  <% when "complete" %>
+    <% app_setting = AppSetting.instance %>
+    <% last_synced = service_type == "radarr" ? app_setting.radarr_last_synced_at : app_setting.sonarr_last_synced_at %>
+    <div class="text-lg font-semibold text-white">
+      <% if last_synced.present? %>
+        <%= time_ago_in_words(last_synced) %> ago
+      <% else %>
+        Never synced
+      <% end %>
+    </div>
+    <% if sync_status.last_sync_count && sync_status.last_sync_count > 0 %>
+      <p class="text-xs text-gray-400 mt-1">Last sync: <%= sync_status.last_sync_count %> <%= service_type == "radarr" ? "movie".pluralize(sync_status.last_sync_count) : "show".pluralize(sync_status.last_sync_count) %></p>
+    <% end %>
+  <% end %>
+<% else %>
+  <div class="text-lg font-semibold text-white">Never synced</div>
+<% end %>
+</div>

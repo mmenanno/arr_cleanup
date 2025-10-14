@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "title": "Test Show",
+    "year": 2020,
+    "tvdbId": 123456,
+    "seasons": [
+      {
+        "seasonNumber": 1,
+        "monitored": true
+      }
+    ]
+  }
+]
+

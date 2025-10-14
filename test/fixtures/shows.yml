@@ -1,0 +1,10 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+test_show:
+  title: Test Show
+  year: 2020
+  tvdb_id: 123456
+  sonarr_id: 1
+  total_size_bytes: 5500000000
+  contains_remux: true
+  ignored: false

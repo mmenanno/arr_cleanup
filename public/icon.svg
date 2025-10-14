@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!-- Trash bin body -->
+  <path d="M10 14 L12 42 C12 43.1 12.9 44 14 44 L34 44 C35.1 44 36 43.1 36 42 L38 14 Z"
+        fill="#3B82F6" stroke="#60A5FA" stroke-width="1.5"/>
+
+  <!-- Trash bin lid -->
+  <rect x="8" y="10" width="32" height="3" rx="1" fill="#60A5FA"/>
+
+  <!-- Handle -->
+  <path d="M18 10 L18 7 C18 5.9 18.9 5 20 5 L28 5 C29.1 5 30 5.9 30 7 L30 10"
+        stroke="#60A5FA" stroke-width="1.5" fill="none"/>
+
+  <!-- Delete lines on bin -->
+  <line x1="20" y1="19" x2="20" y2="37" stroke="#60A5FA" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="24" y1="19" x2="24" y2="37" stroke="#60A5FA" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="28" y1="19" x2="28" y2="37" stroke="#60A5FA" stroke-width="1.5" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+another_round:
+  title: Another Round
+  year: 2020
+  tmdb_id: 580175
+  radarr_id: 1
+  file_path: /data/media/movies/Another Round (2020).mkv
+  size_bytes: 20000000000
+  quality_profile: HD-1080p
+  quality: Remux-1080p
+  is_remux: true
+  ignored: false
+
+test_movie:
+  title: Test Movie
+  year: 2021
+  tmdb_id: 123456
+  radarr_id: 2
+  file_path: /data/media/movies/Test Movie (2021).mkv
+  size_bytes: 5000000000
+  quality_profile: HD-1080p
+  quality: Bluray-1080p
+  is_remux: false
+  ignored: false

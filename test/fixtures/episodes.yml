@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+episode_one:
+  season: season_one
+  episode_number: 1
+  title: Pilot
+  file_path: /data/media/tv/Test Show/Season 01/Test Show - S01E01 - Pilot.mkv
+  size_bytes: 3000000000
+  quality_profile: HD-1080p
+  quality: Remux-1080p
+  is_remux: true
+
+episode_two:
+  season: season_one
+  episode_number: 2
+  title: Episode 2
+  file_path: /data/media/tv/Test Show/Season 01/Test Show - S01E02 - Episode 2.mkv
+  size_bytes: 2500000000
+  quality_profile: HD-1080p
+  quality: Bluray-1080p
+  is_remux: false

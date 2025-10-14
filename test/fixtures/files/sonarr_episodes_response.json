@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "seriesId": 1,
+    "seasonNumber": 1,
+    "episodeNumber": 1,
+    "title": "Pilot",
+    "hasFile": true,
+    "episodeFileId": 1
+  },
+  {
+    "id": 2,
+    "seriesId": 1,
+    "seasonNumber": 1,
+    "episodeNumber": 2,
+    "title": "Episode 2",
+    "hasFile": true,
+    "episodeFileId": 2
+  }
+]
