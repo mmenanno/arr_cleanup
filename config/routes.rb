@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   resource :settings, only: [:edit, :update] do
     post :test_radarr_connection
     post :test_sonarr_connection
+    delete :clear_radarr_credentials
+    delete :clear_sonarr_credentials
   end
 
   # Movies

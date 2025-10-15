@@ -15,7 +15,13 @@ class SettingsController < ApplicationController
 
     if @app_setting.update(params_to_update)
       respond_to do |format|
-        format.turbo_stream { render(turbo_stream: show_toast("Settings updated successfully", type: "success")) }
+        format.turbo_stream do
+          render(turbo_stream: [
+            turbo_stream.replace("radarr-card", partial: "settings/radarr_card", locals: { app_setting: @app_setting }),
+            turbo_stream.replace("sonarr-card", partial: "settings/sonarr_card", locals: { app_setting: @app_setting }),
+            show_toast("Settings updated successfully", type: "success"),
+          ])
+        end
         format.html { redirect_to(edit_settings_path, notice: "Settings updated successfully") }
       end
     else
@@ -71,6 +77,36 @@ class SettingsController < ApplicationController
     end
 
     render(turbo_stream: show_toast(message, type:))
+  end
+
+  def clear_radarr_credentials
+    @app_setting = AppSetting.instance
+    @app_setting.update(radarr_url: nil, radarr_api_key: nil)
+
+    respond_to do |format|
+      format.turbo_stream do
+        render(turbo_stream: [
+          turbo_stream.replace("radarr-card", partial: "settings/radarr_card", locals: { app_setting: @app_setting }),
+          show_toast("Radarr credentials cleared", type: "success"),
+        ])
+      end
+      format.html { redirect_to(edit_settings_path, notice: "Radarr credentials cleared") }
+    end
+  end
+
+  def clear_sonarr_credentials
+    @app_setting = AppSetting.instance
+    @app_setting.update(sonarr_url: nil, sonarr_api_key: nil)
+
+    respond_to do |format|
+      format.turbo_stream do
+        render(turbo_stream: [
+          turbo_stream.replace("sonarr-card", partial: "settings/sonarr_card", locals: { app_setting: @app_setting }),
+          show_toast("Sonarr credentials cleared", type: "success"),
+        ])
+      end
+      format.html { redirect_to(edit_settings_path, notice: "Sonarr credentials cleared") }
+    end
   end
 
   private
