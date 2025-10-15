@@ -37,6 +37,21 @@ module ArrCleanup
           new_secret
         end
       end
+
+      def generate_or_load_encryption_key(key_name)
+        key_file = Rails.root.join("storage/#{key_name}")
+
+        if key_file.exist?
+          key_file.read.strip
+        else
+          require "securerandom"
+          new_key = SecureRandom.hex(32)
+          key_file.dirname.mkpath
+          key_file.write(new_key)
+          key_file.chmod(0o600) # Secure permissions
+          new_key
+        end
+      end
     end
 
     # Initialize configuration defaults for originally generated Rails version.
@@ -59,5 +74,13 @@ module ArrCleanup
     config.secret_key_base = Rails.application.credentials.secret_key_base ||
       ENV["SECRET_KEY_BASE"] ||
       generate_or_load_secret_key_base
+
+    # Auto-generate Active Record encryption keys for distributed deployments
+    config.active_record.encryption.primary_key = ENV["ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY"] ||
+      generate_or_load_encryption_key("active_record_encryption_primary_key")
+    config.active_record.encryption.deterministic_key = ENV["ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY"] ||
+      generate_or_load_encryption_key("active_record_encryption_deterministic_key")
+    config.active_record.encryption.key_derivation_salt = ENV["ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT"] ||
+      generate_or_load_encryption_key("active_record_encryption_key_derivation_salt")
   end
 end
