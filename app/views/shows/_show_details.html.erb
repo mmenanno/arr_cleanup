@@ -1,0 +1,107 @@
+<%# locals: (show:, seasons:) %>
+<div id="show_details_<%= show.id %>" class="space-y-8">
+  <!-- Header Section -->
+  <div class="relative overflow-hidden rounded-xl bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-pink-500/10 p-8 border border-indigo-500/20">
+    <div class="relative">
+      <div class="flex justify-between items-start">
+        <div class="flex-1">
+          <div class="flex items-center gap-3 mb-3">
+            <svg class="h-10 w-10 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 20.25h12m-7.5-3v3m3-3v3m-10.125-3h17.25c.621 0 1.125-.504 1.125-1.125V4.875c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125z" />
+            </svg>
+            <h1 class="text-4xl font-bold text-white"><%= show.title %></h1>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3">
+            <span class="text-lg text-gray-300"><%= show.year %></span>
+            <span class="text-gray-600">•</span>
+            <span class="text-lg font-semibold text-indigo-300"><%= seasons.count %> Seasons</span>
+            <span class="text-gray-600">•</span>
+            <span class="text-lg font-semibold text-indigo-300"><%= seasons.sum { |s| s.episodes.count } %> Episodes</span>
+            <span class="text-gray-600">•</span>
+            <span class="text-lg font-semibold text-purple-300"><%= format_bytes(show.total_size_bytes) %></span>
+
+            <% if show.contains_remux %>
+              <span class="inline-flex rounded-full bg-red-500/20 px-3 py-1 text-xs font-bold text-red-300 ring-1 ring-inset ring-red-500/30">REMUX</span>
+            <% end %>
+            <% if show.ignored %>
+              <span class="inline-flex rounded-full bg-gray-500/20 px-3 py-1 text-xs font-bold text-gray-300 ring-1 ring-inset ring-gray-500/30">IGNORED</span>
+            <% end %>
+          </div>
+        </div>
+
+        <%= render "shows/actions", show: show %>
+      </div>
+  </div>
+
+  <!-- Seasons Grid -->
+  <div>
+    <h2 class="text-2xl font-bold text-white mb-6">Seasons</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <% seasons.each do |season| %>
+        <%= link_to show_season_path(show, season), class: "group block" do %>
+          <div class="relative overflow-hidden rounded-xl bg-gray-800 border-2 border-gray-700 hover:border-indigo-500 transition-all duration-200 shadow-lg hover:shadow-indigo-500/20 h-full">
+            <!-- Season Number Badge -->
+            <div class="absolute top-4 right-4 z-10">
+              <div class="flex items-center justify-center w-12 h-12 rounded-full bg-indigo-600 ring-4 ring-gray-800 shadow-lg">
+                <span class="text-xl font-bold text-white"><%= season.season_number %></span>
+              </div>
+            </div>
+
+            <div class="p-6">
+              <div class="mb-4">
+                <h3 class="text-2xl font-bold text-white group-hover:text-indigo-300 transition-colors">
+                  Season <%= season.season_number %>
+                </h3>
+              </div>
+
+              <!-- Stats Grid -->
+              <div class="grid grid-cols-2 gap-4 mt-6">
+                <div class="bg-gray-900/50 rounded-lg p-3">
+                  <div class="text-xs font-medium text-gray-400 mb-1">Episodes</div>
+                  <div class="text-lg font-bold text-white"><%= season.episodes.count %></div>
+                </div>
+                <div class="bg-gray-900/50 rounded-lg p-3">
+                  <div class="text-xs font-medium text-gray-400 mb-1">Total Size</div>
+                  <div class="text-lg font-bold text-white"><%= format_bytes(season.total_size_bytes) %></div>
+                </div>
+              </div>
+
+              <!-- REMUX Badge -->
+              <% if season.contains_remux %>
+                <div class="mt-4">
+                  <span class="inline-flex items-center gap-1.5 rounded-lg bg-red-500/20 px-3 py-1.5 text-xs font-bold text-red-300 ring-1 ring-inset ring-red-500/30">
+                    <svg class="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495zM10 5a.75.75 0 01.75.75v3.5a.75.75 0 01-1.5 0v-3.5A.75.75 0 0110 5zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd" />
+                    </svg>
+                    CONTAINS REMUX
+                  </span>
+                </div>
+              <% end %>
+
+              <!-- View Episodes Arrow -->
+              <div class="mt-6 flex items-center text-sm font-medium text-indigo-400 group-hover:text-indigo-300 transition-colors">
+                <span>View Episodes</span>
+                <svg class="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <% if show.last_refreshed_at.present? %>
+    <!-- Last Refreshed -->
+    <div class="flex items-center gap-3 text-sm text-gray-400 mt-4">
+      <svg class="h-5 w-5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <span>Last refreshed <span class="text-white font-medium"><%= time_ago_in_words(show.last_refreshed_at) %> ago</span></span>
+    </div>
+  <% end %>
+</div>
+

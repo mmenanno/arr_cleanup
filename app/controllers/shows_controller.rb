@@ -110,10 +110,18 @@ class ShowsController < ApplicationController
 
       respond_to do |format|
         format.turbo_stream do
-          render(turbo_stream: [
-            turbo_stream.replace(@show, partial: "shows/show_row", locals: { show: @show }),
-            show_toast("Show refreshed successfully", type: "success"),
-          ])
+          streams = []
+
+          if request.referer&.include?("/shows/#{@show.id}")
+            # On show page - reload seasons and replace the details section
+            @seasons = @show.seasons.includes(:episodes).order(season_number: :asc)
+            streams << turbo_stream.replace("show_details_#{@show.id}", partial: "shows/show_details", locals: { show: @show, seasons: @seasons })
+          else
+            # On index page - replace the row
+            streams << turbo_stream.replace(@show, partial: "shows/show_row", locals: { show: @show })
+          end
+          streams << show_toast("Show refreshed successfully", type: "success")
+          render(turbo_stream: streams)
         end
         format.html { redirect_to(@show, notice: "Show refreshed successfully") }
       end

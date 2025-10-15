@@ -86,10 +86,17 @@ class MoviesController < ApplicationController
 
       respond_to do |format|
         format.turbo_stream do
-          render(turbo_stream: [
-            turbo_stream.replace(@movie, partial: "movies/movie", locals: { movie: @movie }),
-            show_toast("Movie refreshed successfully", type: "success"),
-          ])
+          streams = []
+
+          streams << if request.referer&.include?("/movies/#{@movie.id}")
+            # On show page - replace the details section
+            turbo_stream.replace("movie_details_#{@movie.id}", partial: "movies/show_details", locals: { movie: @movie })
+          else
+            # On index page - replace the row
+            turbo_stream.replace(@movie, partial: "movies/movie", locals: { movie: @movie })
+          end
+          streams << show_toast("Movie refreshed successfully", type: "success")
+          render(turbo_stream: streams)
         end
         format.html { redirect_to(@movie, notice: "Movie refreshed successfully") }
       end
