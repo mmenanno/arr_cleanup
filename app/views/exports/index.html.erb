@@ -45,7 +45,7 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
       <!-- All Movies - No Ignored -->
-      <%= link_to movies_exports_path(remux_only: false, include_ignored: false), class: "group block p-4 rounded-lg bg-indigo-600/20 border border-indigo-500/50 hover:bg-indigo-600/30 hover:border-indigo-500 transition-all cursor-pointer" do %>
+      <%= link_to movies_exports_path(remux_only: false, include_ignored: false), class: "group block p-4 rounded-lg bg-indigo-600/20 border border-indigo-500/50 hover:bg-indigo-600/30 hover:border-indigo-500 transition-all cursor-pointer", data: { turbo: false } do %>
         <div class="flex items-start gap-3">
           <div class="flex-shrink-0 mt-1">
             <svg class="h-5 w-5 text-indigo-400 group-hover:text-indigo-300 transition-colors" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
@@ -60,7 +60,7 @@
       <% end %>
 
       <!-- All Movies - With Ignored -->
-      <%= link_to movies_exports_path(remux_only: false, include_ignored: true), class: "group block p-4 rounded-lg bg-indigo-600/20 border border-indigo-500/50 hover:bg-indigo-600/30 hover:border-indigo-500 transition-all cursor-pointer" do %>
+      <%= link_to movies_exports_path(remux_only: false, include_ignored: true), class: "group block p-4 rounded-lg bg-indigo-600/20 border border-indigo-500/50 hover:bg-indigo-600/30 hover:border-indigo-500 transition-all cursor-pointer", data: { turbo: false } do %>
         <div class="flex items-start gap-3">
           <div class="flex-shrink-0 mt-1">
             <svg class="h-5 w-5 text-indigo-400 group-hover:text-indigo-300 transition-colors" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
@@ -75,7 +75,7 @@
       <% end %>
 
       <!-- Remux Movies - No Ignored -->
-      <%= link_to movies_exports_path(remux_only: true, include_ignored: false), class: "group block p-4 rounded-lg bg-purple-600/20 border border-purple-500/50 hover:bg-purple-600/30 hover:border-purple-500 transition-all cursor-pointer" do %>
+      <%= link_to movies_exports_path(remux_only: true, include_ignored: false), class: "group block p-4 rounded-lg bg-purple-600/20 border border-purple-500/50 hover:bg-purple-600/30 hover:border-purple-500 transition-all cursor-pointer", data: { turbo: false } do %>
         <div class="flex items-start gap-3">
           <div class="flex-shrink-0 mt-1">
             <svg class="h-5 w-5 text-purple-400 group-hover:text-purple-300 transition-colors" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
@@ -90,7 +90,7 @@
       <% end %>
 
       <!-- Remux Movies - With Ignored -->
-      <%= link_to movies_exports_path(remux_only: true, include_ignored: true), class: "group block p-4 rounded-lg bg-purple-600/20 border border-purple-500/50 hover:bg-purple-600/30 hover:border-purple-500 transition-all cursor-pointer" do %>
+      <%= link_to movies_exports_path(remux_only: true, include_ignored: true), class: "group block p-4 rounded-lg bg-purple-600/20 border border-purple-500/50 hover:bg-purple-600/30 hover:border-purple-500 transition-all cursor-pointer", data: { turbo: false } do %>
         <div class="flex items-start gap-3">
           <div class="flex-shrink-0 mt-1">
             <svg class="h-5 w-5 text-purple-400 group-hover:text-purple-300 transition-colors" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
@@ -122,7 +122,7 @@
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
       <!-- All Shows - No Ignored -->
-      <%= link_to shows_exports_path(remux_only: false, include_ignored: false), class: "group block p-4 rounded-lg bg-purple-600/20 border border-purple-500/50 hover:bg-purple-600/30 hover:border-purple-500 transition-all cursor-pointer" do %>
+      <%= link_to shows_exports_path(remux_only: false, include_ignored: false), class: "group block p-4 rounded-lg bg-purple-600/20 border border-purple-500/50 hover:bg-purple-600/30 hover:border-purple-500 transition-all cursor-pointer", data: { turbo: false } do %>
         <div class="flex items-start gap-3">
           <div class="flex-shrink-0 mt-1">
             <svg class="h-5 w-5 text-purple-400 group-hover:text-purple-300 transition-colors" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
@@ -137,7 +137,7 @@
       <% end %>
 
       <!-- All Shows - With Ignored -->
-      <%= link_to shows_exports_path(remux_only: false, include_ignored: true), class: "group block p-4 rounded-lg bg-purple-600/20 border border-purple-500/50 hover:bg-purple-600/30 hover:border-purple-500 transition-all cursor-pointer" do %>
+      <%= link_to shows_exports_path(remux_only: false, include_ignored: true), class: "group block p-4 rounded-lg bg-purple-600/20 border border-purple-500/50 hover:bg-purple-600/30 hover:border-purple-500 transition-all cursor-pointer", data: { turbo: false } do %>
         <div class="flex items-start gap-3">
           <div class="flex-shrink-0 mt-1">
             <svg class="h-5 w-5 text-purple-400 group-hover:text-purple-300 transition-colors" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
@@ -152,7 +152,7 @@
       <% end %>
 
       <!-- Remux Shows - No Ignored -->
-      <%= link_to shows_exports_path(remux_only: true, include_ignored: false), class: "group block p-4 rounded-lg bg-pink-600/25 border border-pink-500/60 hover:bg-pink-600/35 hover:border-pink-500 transition-all cursor-pointer" do %>
+      <%= link_to shows_exports_path(remux_only: true, include_ignored: false), class: "group block p-4 rounded-lg bg-pink-600/25 border border-pink-500/60 hover:bg-pink-600/35 hover:border-pink-500 transition-all cursor-pointer", data: { turbo: false } do %>
         <div class="flex items-start gap-3">
           <div class="flex-shrink-0 mt-1">
             <svg class="h-5 w-5 text-pink-400 group-hover:text-pink-300 transition-colors" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
@@ -167,7 +167,7 @@
       <% end %>
 
       <!-- Remux Shows - With Ignored -->
-      <%= link_to shows_exports_path(remux_only: true, include_ignored: true), class: "group block p-4 rounded-lg bg-pink-600/25 border border-pink-500/60 hover:bg-pink-600/35 hover:border-pink-500 transition-all cursor-pointer" do %>
+      <%= link_to shows_exports_path(remux_only: true, include_ignored: true), class: "group block p-4 rounded-lg bg-pink-600/25 border border-pink-500/60 hover:bg-pink-600/35 hover:border-pink-500 transition-all cursor-pointer", data: { turbo: false } do %>
         <div class="flex items-start gap-3">
           <div class="flex-shrink-0 mt-1">
             <svg class="h-5 w-5 text-pink-400 group-hover:text-pink-300 transition-colors" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
