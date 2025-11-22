@@ -8,3 +8,12 @@ test_show:
   total_size_bytes: 5500000000
   contains_remux: true
   ignored: false
+
+ignored_show:
+  title: Ignored Show
+  year: 2021
+  tvdb_id: 789012
+  sonarr_id: 2
+  total_size_bytes: 3000000000
+  contains_remux: false
+  ignored: true

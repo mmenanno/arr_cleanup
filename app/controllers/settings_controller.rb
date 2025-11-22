@@ -25,7 +25,7 @@ class SettingsController < ApplicationController
         format.html { redirect_to(edit_settings_path, notice: "Settings updated successfully") }
       end
     else
-      render(:edit, status: :unprocessable_entity)
+      render(:edit, status: :unprocessable_content)
     end
   end
 

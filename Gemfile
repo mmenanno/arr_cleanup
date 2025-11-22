@@ -30,7 +30,7 @@ gem "faraday"
 gem "nokogiri"
 
 # Pagination
-gem "pagy"
+gem "pagy", "9.4.0"
 
 # Diagnostics, tooling, and quality
 group :development, :test, :ci do

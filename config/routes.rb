@@ -36,4 +36,12 @@ Rails.application.routes.draw do
     end
     resources :seasons, only: [:show]
   end
+
+  # Exports
+  resources :exports, only: [:index] do
+    collection do
+      get :movies
+      get :shows
+    end
+  end
 end

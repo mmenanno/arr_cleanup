@@ -23,3 +23,15 @@ test_movie:
   quality: Bluray-1080p
   is_remux: false
   ignored: false
+
+ignored_movie:
+  title: Ignored Movie
+  year: 2022
+  tmdb_id: 789012
+  radarr_id: 3
+  file_path: /data/media/movies/Ignored Movie (2022).mkv
+  size_bytes: 8000000000
+  quality_profile: HD-1080p
+  quality: Remux-1080p
+  is_remux: true
+  ignored: true
