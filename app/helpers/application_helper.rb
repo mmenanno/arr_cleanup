@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  include Pagy::Frontend
-
   def format_bytes(bytes)
     return "N/A" if bytes.nil?
 

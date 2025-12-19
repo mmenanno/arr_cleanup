@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class MoviesController < ApplicationController
-  include Pagy::Backend
-
   before_action :set_movie, only: [:show, :refresh, :ignore, :unignore]
 
   def index

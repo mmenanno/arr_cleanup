@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class SeasonsController < ApplicationController
-  include Pagy::Backend
-
   before_action :set_show
   before_action :set_season
 
