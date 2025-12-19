@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class ShowsController < ApplicationController
-  include Pagy::Backend
-
   before_action :set_show, only: [:show, :refresh, :ignore, :unignore]
 
   def index
