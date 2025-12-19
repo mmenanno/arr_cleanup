@@ -65,7 +65,7 @@ jobs:
         env:
           RAILS_ENV: test
           RAILS_TEST_KEY: ${{ secrets.RAILS_TEST_KEY }}
-        run: bin/rails test test:system
+        run: bin/rails test:all
 
       - name: Upload screenshots from failed system tests
         uses: actions/upload-artifact@v5
