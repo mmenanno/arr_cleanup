@@ -189,7 +189,7 @@ GEM
     nokogiri (1.19.0-x86_64-linux-gnu)
       racc (~> 1.4)
     ostruct (0.6.3)
-    pagy (43.2.7)
+    pagy (43.2.8)
       json
       yaml
     parallel (1.27.0)
@@ -390,7 +390,7 @@ DEPENDENCIES
   importmap-rails
   mocha
   nokogiri
-  pagy (= 43.2.7)
+  pagy (= 43.2.8)
   propshaft
   puma (>= 5.0)
   rails (~> 8.1.2)
