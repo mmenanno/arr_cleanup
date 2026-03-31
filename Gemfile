@@ -28,7 +28,7 @@ gem "faraday"
 gem "nokogiri"
 
 # Pagination
-gem "pagy", "43.4.3"
+gem "pagy", "43.4.4"
 
 # Diagnostics, tooling, and quality
 group :development, :test, :ci do
