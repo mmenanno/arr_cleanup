@@ -36,7 +36,7 @@ group :development, :test, :ci do
   gem "brakeman", require: false
   gem "rubocop-mmenanno-rails", require: false
   gem "erb_lint", require: false
-  gem "toys", "~> 0.21.0"
+  gem "toys", "~> 0.22.0"
 end
 
 # System testing and HTTP mocking
